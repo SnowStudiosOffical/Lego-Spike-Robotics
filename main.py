@@ -1,13 +1,13 @@
 from hub import port, button
 import runloop, motor, time, color_sensor,time
 
-async def main():  # repo is: https://github.com/SnowStudiosOffical/Lego-Spike-Robotics/
+async def main():
     # Example code using the GLUE library.
     print("Hello, World!")
     await GLUE.AssignMotorPorts(port.D,port.C)
     await GLUE.MotorPairMoveForward(1500, 400) # move using the GLUE library!
     time.sleep_ms(2001)
-    motor.run_to_absolute_position(port.E,93, 300)
+    motor.run_to_absolute_position(port.E,367, 300)
     time.sleep_ms(550)
     await GLUE.MotorPairMoveBackward(500, 300)
     time.sleep_ms(501)
@@ -18,16 +18,39 @@ async def main():  # repo is: https://github.com/SnowStudiosOffical/Lego-Spike-R
     DONE = False
     while True:
         if button.pressed(button.LEFT or button.RIGHT):
+            for x in range(12):
+                await motor.run_for_time(port.E, 15000,400)
+                time.sleep_ms(400)
+                motor.run_to_absolute_position(port.E, 260, 600)
+                time.sleep_ms(300)
+                await GLUE.MotorPairMoveBackward(500, 100)
+
+    while True:
+        if button.pressed(button.LEFT or button.RIGHT):
             runloop.run(Model_2())
             DONE = True
 
 async def Model_2():
-    print("doing second model")
-    await GLUE.MotorPairMoveForward(1000,600)
+    print("doing second model") 
+    await GLUE.MotorPairMoveForward(835,600)
     time.sleep_ms(3000)
     await GLUE.TurnLeft()
     time.sleep_ms(1000)
-    await GLUE.MotorPairMoveForward(100, 10)
+    await GLUE.MotorPairMoveForward(1000, 450)
+    time.sleep_ms(1200)
+    await GLUE.TurnRight()
+    time.sleep_ms(1100)
+    await GLUE.MotorPairMoveForward(1000, 450)
+    time.sleep_ms(1000)
+    await GLUE.TurnRight()
+    time.sleep_ms(1000)
+    await GLUE.MotorPairMoveForward(600, 1000)
+    while True:
+        if button.pressed(button.LEFT or button.RIGHT):
+            motor.run_to_absolute_position(port.E, 345, 10000)
+            time.sleep_ms(400)
+            motor.run_to_absolute_position(port.E, 307, 10000)
+    
 
 
 
@@ -103,7 +126,7 @@ class GLUE:
     async def TurnRight(time=1000,velocity=-500):
         global Port_SECOND
         Port_SECOND
-        motor.run_for_time(Port_SECOND, 800, 500)
+        motor.run_for_time(Port_SECOND, 800, -500)
 
     @staticmethod
     def GetCurrentColor(port_first=port.A):
