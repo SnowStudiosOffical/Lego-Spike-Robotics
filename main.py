@@ -19,7 +19,7 @@ async def main():
     while True:
         if button.pressed(button.LEFT or button.RIGHT):
             for x in range(12):
-                await motor.run_for_time(port.E, 15000,400)
+                await motor.run_for_time(port.E, 2000,400)
                 time.sleep_ms(400)
                 motor.run_to_absolute_position(port.E, 260, 600)
                 time.sleep_ms(300)
@@ -31,7 +31,7 @@ async def main():
             DONE = True
 
 async def Model_2():
-    print("doing second model") 
+    print("doing second model")
     await GLUE.MotorPairMoveForward(835,600)
     time.sleep_ms(3000)
     await GLUE.TurnLeft()
@@ -50,7 +50,7 @@ async def Model_2():
             motor.run_to_absolute_position(port.E, 345, 10000)
             time.sleep_ms(400)
             motor.run_to_absolute_position(port.E, 307, 10000)
-    
+
 
 
 
