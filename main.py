@@ -2,6 +2,7 @@ from hub import port, button
 import runloop, motor, time, color_sensor,time
 
 async def main():
+    #await GLUE.AwaitNextFunction(Model_2)
     # Example code using the GLUE library.
     print("Hello, World!")
     await GLUE.AssignMotorPorts(port.D,port.C)
@@ -14,24 +15,27 @@ async def main():
     await GLUE.MotorPairMoveForward(180, 200)
     motor.run_to_relative_position(port.E,2, 120)
     time.sleep_ms(500)
+    await GLUE.MotorPairMoveForward(100,150)
+    time.sleep_ms(100)
+    motor.run_to_absolute_position(port.E, 266, 10000)
+    time.sleep_ms(500)
     await GLUE.MotorPairMoveBackward(1500, 400)
     DONE = False
-    while True:
-        if button.pressed(button.LEFT or button.RIGHT):
-            for x in range(12):
-                await motor.run_for_time(port.E, 2000,400)
-                time.sleep_ms(400)
-                motor.run_to_absolute_position(port.E, 260, 600)
-                time.sleep_ms(300)
-                await GLUE.MotorPairMoveBackward(500, 100)
-
-    while True:
+    while not DONE:
         if button.pressed(button.LEFT or button.RIGHT):
             runloop.run(Model_2())
-            DONE = True
+
+            """
+            await motor.run_for_time(port.E, 2000,400)
+            time.sleep_ms(400)
+            motor.run_to_absolute_position(port.E, 260, 600) # code for pulley system
+            time.sleep_ms(300)
+            await GLUE.MotorPairMoveBackward(500, 100)
+            """
 
 async def Model_2():
     print("doing second model")
+    """
     await GLUE.MotorPairMoveForward(835,600)
     time.sleep_ms(3000)
     await GLUE.TurnLeft()
@@ -44,16 +48,30 @@ async def Model_2():
     time.sleep_ms(1000)
     await GLUE.TurnRight()
     time.sleep_ms(1000)
-    await GLUE.MotorPairMoveForward(600, 1000)
-    while True:
-        if button.pressed(button.LEFT or button.RIGHT):
-            motor.run_to_absolute_position(port.E, 345, 10000)
-            time.sleep_ms(400)
-            motor.run_to_absolute_position(port.E, 307, 10000)
-
-
-
-
+    await GLUE.MotorPairMoveForward(600, 700)
+    time.sleep_ms(1200)
+    """
+    await GLUE.MotorPairMoveForward(2800, 600)
+    time.sleep_ms(4000)
+    await GLUE.TurnRight()
+    time.sleep_ms(1000)
+    motor.run_to_absolute_position(port.E, 319, 10000)
+    time.sleep_ms(600)
+    await GLUE.MotorPairMoveForward(800, 450)
+    time.sleep_ms(2000)
+    for x in range(12):
+        await motor.run_for_time(port.E, 2000,400)
+        time.sleep_ms(400)
+        motor.run_to_absolute_position(port.E, 260, 600)
+        time.sleep_ms(300)
+        await GLUE.MotorPairMoveBackward(500, 100)
+    time.sleep_ms(3500)
+    await GLUE.MotorPairMoveBackward(1000,500)
+    time.sleep_ms(1300)
+    await GLUE.TurnRight()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(1600, 1000)
+    #await GLUE.MotorPairMoveForward(1200, 600)
     """
     await GLUE.MotorPairMoveForward(2500, 10000) # deprecated code will not run until updated
     time.sleep_ms(2501)
@@ -86,6 +104,14 @@ async def Model_2():
 # --------------------------
 
 class GLUE:
+
+    @staticmethod
+    async def AwaitNextFunction(Function):
+        DONE = False
+        while not DONE:
+            if button.pressed(button.LEFT or button.RIGHT):
+                Function()
+
 
     @staticmethod
     async def AssignMotorPorts(Port_ONE, Port_TWO):
