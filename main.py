@@ -57,7 +57,7 @@ async def Model_2():
     time.sleep_ms(1000)
     motor.run_to_absolute_position(port.E, 319, 10000)
     time.sleep_ms(600)
-    await GLUE.MotorPairMoveForward(800, 450)
+    await GLUE.MotorPairMoveForward(700, 450)
     time.sleep_ms(2000)
     for x in range(12):
         await motor.run_for_time(port.E, 2000,400)
