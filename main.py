@@ -60,11 +60,12 @@ async def Model_2():
     await GLUE.MotorPairMoveForward(700, 450)
     time.sleep_ms(2000)
     for x in range(12):
+        time.sleep_ms(1000)
         await motor.run_for_time(port.E, 2000,400)
-        time.sleep_ms(400)
+        time.sleep_ms(600)
         motor.run_to_absolute_position(port.E, 260, 600)
         time.sleep_ms(300)
-        await GLUE.MotorPairMoveBackward(500, 100)
+        await GLUE.MotorPairMoveBackward(750, 100)
     time.sleep_ms(3500)
     await GLUE.MotorPairMoveBackward(1000,500)
     time.sleep_ms(1300)
@@ -72,6 +73,7 @@ async def Model_2():
     time.sleep_ms(1200)
     await GLUE.MotorPairMoveForward(1600, 1000)
     #await GLUE.MotorPairMoveForward(1200, 600)
+
     """
     await GLUE.MotorPairMoveForward(2500, 10000) # deprecated code will not run until updated
     time.sleep_ms(2501)
