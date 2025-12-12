@@ -20,11 +20,26 @@ async def main():
     motor.run_to_absolute_position(port.E, 266, 10000)
     time.sleep_ms(500)
     await GLUE.MotorPairMoveBackward(1500, 400)
-    time.sleep(17)
-    sound.beep(4000,500)
     time.sleep(3)
-    runloop.run(Model_2())
+    sound.beep(4000,500)
+    time.sleep(2)
+    # go to next side
+    await GLUE.MotorPairMoveForward(800,200)
+    time.sleep_ms(1200)
+    await GLUE.TurnLeft()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(300,550)
+    time.sleep_ms(1200)
+    await GLUE.TurnRight()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(200,400)
+    time.sleep_ms(2300)
+    await GLUE.MotorPairMoveForward(4000,700)
+    #runloop.run(Model_2())
+    
     return 0
+
+
 
 async def Model_2():
     print("doing second model")
@@ -54,13 +69,13 @@ async def Model_2():
     time.sleep_ms(1200)
     await GLUE.MotorPairMoveForward(1200, 900)
     time.sleep_ms(2900)
-    await GLUE.TurnRight(1200,-800)
+    await GLUE.TurnRight()
     time.sleep_ms(1200)
     motor.run_to_absolute_position(port.E, 319, 10000)
     await GLUE.MotorPairMoveForward(700,450)
     time.sleep_ms(1500)
     time.sleep_ms(600)
-    await GLUE.MotorPairMoveForward(700, 450)
+    await GLUE.MotorPairMoveForward(550, 450)
     time.sleep_ms(2000)
     for x in range(5):
         time.sleep_ms(1000)
