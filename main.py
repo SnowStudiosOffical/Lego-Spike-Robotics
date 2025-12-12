@@ -1,4 +1,4 @@
-from hub import port, button
+from hub import port, button, sound
 import runloop, motor, time, color_sensor,time
 
 async def main():
@@ -20,18 +20,11 @@ async def main():
     motor.run_to_absolute_position(port.E, 266, 10000)
     time.sleep_ms(500)
     await GLUE.MotorPairMoveBackward(1500, 400)
-    DONE = False
-    while not DONE:
-        if button.pressed(button.LEFT or button.RIGHT):
-            runloop.run(Model_2())
-
-            """
-            await motor.run_for_time(port.E, 2000,400)
-            time.sleep_ms(400)
-            motor.run_to_absolute_position(port.E, 260, 600) # code for pulley system
-            time.sleep_ms(300)
-            await GLUE.MotorPairMoveBackward(500, 100)
-            """
+    time.sleep(17)
+    sound.beep(4000,500)
+    time.sleep(3)
+    runloop.run(Model_2())
+    return 0
 
 async def Model_2():
     print("doing second model")
@@ -51,15 +44,25 @@ async def Model_2():
     await GLUE.MotorPairMoveForward(600, 700)
     time.sleep_ms(1200)
     """
-    await GLUE.MotorPairMoveForward(2800, 600)
-    time.sleep_ms(4000)
+    await GLUE.MotorPairMoveForward(1000,200)
+    time.sleep_ms(1200)
+    await GLUE.TurnLeft()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(1000,550)
+    time.sleep_ms(1200)
     await GLUE.TurnRight()
-    time.sleep_ms(1000)
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(1200, 900)
+    time.sleep_ms(2900)
+    await GLUE.TurnRight(1200,-800)
+    time.sleep_ms(1200)
     motor.run_to_absolute_position(port.E, 319, 10000)
+    await GLUE.MotorPairMoveForward(700,450)
+    time.sleep_ms(1500)
     time.sleep_ms(600)
     await GLUE.MotorPairMoveForward(700, 450)
     time.sleep_ms(2000)
-    for x in range(12):
+    for x in range(5):
         time.sleep_ms(1000)
         await motor.run_for_time(port.E, 2000,400)
         time.sleep_ms(600)
