@@ -6,7 +6,7 @@ async def main():
     # Example code using the GLUE library.
     print("Hello, World!")
     await GLUE.AssignMotorPorts(port.D,port.C)
-    await GLUE.MotorPairMoveForward(1500, 400) # move using the GLUE library!
+    await GLUE.MotorPairMoveForward(1500, 400) # move using the GLUE library! (made by me)
     time.sleep_ms(2001)
     motor.run_to_absolute_position(port.E,367, 300)
     time.sleep_ms(550)
@@ -63,7 +63,7 @@ async def Model_2():
     await GLUE.MotorPairMoveForward(700,450)
     time.sleep_ms(1500)
     time.sleep_ms(600)
-    await GLUE.MotorPairMoveForward(550, 450)
+    await GLUE.MotorPairMoveForward(550, 650)
     time.sleep_ms(2000)
     for x in range(8):
         print("Starting pulley\n")
@@ -113,6 +113,12 @@ async def Model_2():
 # --------------------------
 
 class GLUE:
+
+    @staticmethod
+    def terminal():
+        pass
+        
+
 
     @staticmethod
     async def AwaitNextFunction(Function):
