@@ -24,9 +24,7 @@ async def main():
     sound.beep(4000,500)
     time.sleep(3)
     # model 1.5
-    await GLUE.MotorPairMoveForward(5000,1000000)
-    #runloop.run(Model_2())
-    
+    runloop.run(Model_2())
     return 0
 
 
@@ -67,7 +65,8 @@ async def Model_2():
     time.sleep_ms(600)
     await GLUE.MotorPairMoveForward(550, 450)
     time.sleep_ms(2000)
-    for x in range(5):
+    for x in range(8):
+        print("Starting pulley\n")
         time.sleep_ms(1000)
         await motor.run_for_time(port.E, 2000,400)
         time.sleep_ms(600)
