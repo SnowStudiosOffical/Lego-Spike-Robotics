@@ -63,7 +63,7 @@ async def Model_2():
     await GLUE.MotorPairMoveForward(700,450)
     time.sleep_ms(1500)
     time.sleep_ms(600)
-    await GLUE.MotorPairMoveForward(550, 650)
+    await GLUE.MotorPairMoveForward(550, 650) # goes to the pulley system, may need to refine
     time.sleep_ms(2000)
     for x in range(8):
         print("Starting pulley\n")
