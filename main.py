@@ -5,8 +5,8 @@ async def main():
     #await GLUE.AwaitNextFunction(Model_2)
     # Example code using the GLUE library.
     print("Hello, World!")
-    await GLUE.AssignMotorPorts(port.D,port.C)
-    await GLUE.MotorPairMoveForward(1500, 400) # move using the GLUE library!
+    await GLUE.AssignMotorPorts(port.D,port.C, port.A)
+    await GLUE.MotorPairMoveForward(1500, 400) # move using the GLUE library! (made by me)
     time.sleep_ms(2001)
     motor.run_to_absolute_position(port.E,367, 300)
     time.sleep_ms(550)
@@ -24,9 +24,7 @@ async def main():
     sound.beep(4000,500)
     time.sleep(3)
     # model 1.5
-    await GLUE.MotorPairMoveForward(5000,1000000)
-    #runloop.run(Model_2())
-    
+    runloop.run(Model_2())
     return 0
 
 
@@ -65,15 +63,16 @@ async def Model_2():
     await GLUE.MotorPairMoveForward(700,450)
     time.sleep_ms(1500)
     time.sleep_ms(600)
-    await GLUE.MotorPairMoveForward(550, 450)
+    await GLUE.MotorPairMoveForward(500, 650) # goes to the pulley system, may need to refine the timing here :(
     time.sleep_ms(2000)
-    for x in range(5):
+    for x in range(7):
+        print("Starting pulley\n")
         time.sleep_ms(1000)
         await motor.run_for_time(port.E, 2000,400)
-        time.sleep_ms(600)
+        time.sleep_ms(600)                                  # CSHARP BETTER RAAAAAH, no really they should've done CSHARP instead of micropython >:( 
         motor.run_to_absolute_position(port.E, 260, 600)
         time.sleep_ms(300)
-        await GLUE.MotorPairMoveBackward(750, 100)
+        await GLUE.MotorPairMoveBackward(700, 100)
     time.sleep_ms(3500)
     await GLUE.MotorPairMoveBackward(1000,500)
     time.sleep_ms(1300)
@@ -81,6 +80,21 @@ async def Model_2():
     time.sleep_ms(1200)
     await GLUE.MotorPairMoveForward(1600, 1000)
     #await GLUE.MotorPairMoveForward(1200, 600)
+
+    """
+    GO to next section!
+
+    """
+    await GLUE.MotorPairMoveForward(1000,200)
+    time.sleep_ms(1200)
+    await GLUE.TurnLeft()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(1000,550)
+    time.sleep_ms(1200)
+    await GLUE.TurnRight()
+    time.sleep_ms(1200)
+    await GLUE.MotorPairMoveForward(2600, 900)
+    time.sleep_ms(2900)
 
     """
     await GLUE.MotorPairMoveForward(2500, 10000) # deprecated code will not run until updated
@@ -116,6 +130,23 @@ async def Model_2():
 class GLUE:
 
     @staticmethod
+    def FatalError():
+        print("Uh oh a fatal error has occured! omitting all info for debugging...")
+
+    @staticmethod
+    async def RunHammer():
+        motor.run_to_absolute_position(Hammer_Port,278,100000)
+
+
+
+
+    @staticmethod
+    def terminal():
+        pass
+
+
+
+    @staticmethod
     async def AwaitNextFunction(Function):
         DONE = False
         while not DONE:
@@ -124,11 +155,13 @@ class GLUE:
 
 
     @staticmethod
-    async def AssignMotorPorts(Port_ONE, Port_TWO):
+    async def AssignMotorPorts(Port_ONE, Port_TWO, HammerPort):
+        global Hammer_Port
         global Port_SECOND
         global Port_FIRST
         Port_SECOND = Port_TWO
         Port_FIRST = Port_ONE
+        Hammer_Port = HammerPort
 
 
 
